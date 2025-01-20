@@ -1,3 +1,4 @@
+import { jwtDecode } from "jwt-decode";
 import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { Routes, Route, } from 'react-router-dom';
 import Login from './components/Login';
@@ -20,7 +21,16 @@ const App = () => {
 
 
   useEffect(() => {
-    localStorage.setItem('token', token);
+    if(token){
+      const decodedToken = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+      const check =  decodedToken.exp < currentTime;
+      console.log('check', check);
+      if(check){
+        localStorage.removeItem('token');
+        setToken('');
+      }
+    }
   }, [token])
 
   return (
