@@ -7,7 +7,6 @@ const List = ({ token }) => {
 
   const [list, setList] = useState([]);
 
-
   const removeProduct = async (productId) => {
     try {
       console.log('productId', productId);
